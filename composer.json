@@ -1,0 +1,13 @@
+{
+    "name": "alejandro/clean-architecture",
+    "description": "Provides a demo of clean architecture in PHP",
+    "type": "project",
+    "license": "The Unlicense",
+    "authors": [
+        {
+            "name": "Alejandro Falkowski",
+            "email": "alejandro.falkowski@gelato.com"
+        }
+    ],
+    "require": {}
+}
