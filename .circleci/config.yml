@@ -3,12 +3,24 @@ jobs:
   build:
     docker:
       - image: circleci/php:7
+    working_directory: ~/code
     steps:
-      - checkout
+      - checkout:
+          path: ~/code
+
+      - restore_cache:
+          keys:
+            - vendor-cache-{{ checksum "composer.lock" }}
+            - vendor-cache-
 
       - run:
           name: Run Composer
           command: composer install
+
+      - save_cache:
+          paths:
+            - vendor
+          key: vendor-cache-{{ checksum "composer.lock" }}
 
       - run:
           name: Run Specs
