@@ -9,5 +9,13 @@
             "email": "alejandro.falkowski@gelato.com"
         }
     ],
-    "require": {}
+    "require": {},
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-0": {
+            "": "src/"
+        }
+    }
 }
