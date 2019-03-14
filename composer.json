@@ -9,7 +9,12 @@
             "email": "alejandro.falkowski@gelato.com"
         }
     ],
-    "require": {},
+    "require": {
+
+    },
+    "require-dev": {
+        "phpspec/phpspec": "^5.1"
+    },
     "config": {
         "bin-dir": "bin"
     },
