@@ -23,6 +23,10 @@ jobs:
           key: vendor-cache-{{ checksum "composer.lock" }}
 
       - run:
+          name: Run analysis
+          command: make analysis
+
+      - run:
           name: Run specs
           command: make specs
 
