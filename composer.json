@@ -13,7 +13,8 @@
 
     },
     "require-dev": {
-        "kahlan/kahlan": "^4.6"
+        "kahlan/kahlan": "^4.6",
+        "behat/behat": "^3.5"
     },
     "config": {
         "bin-dir": "bin"
