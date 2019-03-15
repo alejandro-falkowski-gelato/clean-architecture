@@ -8,7 +8,7 @@ use Behat\Behat\Tester\Exception\PendingException;
 /**
  * Defines application features from the specific context.
  */
-class FeatureContext implements Context
+class AddTodoContext implements Context
 {
     /**
      * Initializes context.
