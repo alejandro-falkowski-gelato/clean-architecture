@@ -13,7 +13,6 @@
 
     },
     "require-dev": {
-        "phpspec/phpspec": "^5.1",
         "kahlan/kahlan": "^4.6"
     },
     "config": {
