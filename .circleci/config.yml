@@ -25,3 +25,7 @@ jobs:
       - run:
           name: Run Specs
           command: ./bin/kahlan
+          
+      - run:
+          name: Run Features
+          command: ./bin/behat
