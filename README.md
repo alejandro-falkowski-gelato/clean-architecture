@@ -9,3 +9,37 @@ For more on this please review the [following](https://blog.cleancoder.com/uncle
 ## Application
 
 We will focus on the famous [TODO](https://github.com/tastejs/todomvc/blob/master/app-spec.md) application
+
+### Setup
+
+Make sure you have the following setup:
+
+```sh
+brew install php
+brew install composer
+brew install postgres
+```
+
+### Dependencies
+
+To get the dependencies run:
+
+```sh
+make dependencies
+```
+
+### Specs
+
+To run the specs do:
+
+```sh
+make specs
+```
+
+### Features
+
+To run the features do:
+
+```sh
+make features
+```
