@@ -1,0 +1,35 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/php:7
+    working_directory: ~/code
+    steps:
+      - checkout:
+          path: ~/code
+
+      - restore_cache:
+          keys:
+            - vendor-cache-{{ checksum "composer.lock" }}
+            - vendor-cache-
+
+      - run:
+          name: Get dependencies
+          command: make dependencies
+
+      - save_cache:
+          paths:
+            - vendor
+          key: vendor-cache-{{ checksum "composer.lock" }}
+
+      - run:
+          name: Run analysis
+          command: make analysis
+
+      - run:
+          name: Run specs
+          command: make specs
+
+      - run:
+          name: Run features
+          command: make features
