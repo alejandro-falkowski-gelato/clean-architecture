@@ -24,4 +24,4 @@ jobs:
 
       - run:
           name: Run Specs
-          command: ./bin/phpspec run
+          command: ./bin/kahlan
