@@ -14,8 +14,8 @@ jobs:
             - vendor-cache-
 
       - run:
-          name: Run Composer
-          command: composer install
+          name: Get dependencies
+          command: make dependencies
 
       - save_cache:
           paths:
@@ -23,9 +23,9 @@ jobs:
           key: vendor-cache-{{ checksum "composer.lock" }}
 
       - run:
-          name: Run Specs
-          command: ./bin/kahlan
-          
+          name: Run specs
+          command: make specs
+
       - run:
-          name: Run Features
-          command: ./bin/behat
+          name: Run features
+          command: make features
