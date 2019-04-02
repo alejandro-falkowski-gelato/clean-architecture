@@ -3,61 +3,12 @@
 
 use Ramsey\Uuid\Uuid;
 
-interface TodoRepository {
-    public function add($todo);
-}
+use Gelato\Add\Request;
+use Gelato\Add\Repository;
+use Gelato\Add\DuplicateException;
+use Gelato\Add\Command;
 
-class AddRequest {
-    private $id;
-    private $name;
-
-    public function __construct($id, $name) {
-        $this->id = $id;
-        $this->name = $name;
-    }
-
-    public function id() {
-        return $this->id;
-    }
-
-    public function name() {
-        return $this->name;
-    }
-};
-
-class Todo {
-    private $id;
-    private $name;
-
-    public function __construct($id, $name) {
-        $this->id = $id;
-        $this->name = $name;
-    }
-
-    public function id() {
-        return $this->id;
-    }
-
-    public function name() {
-        return $this->name;
-    }
-};
-
-class Add {
-    private $repository;
-
-    public function __construct($repository) {
-        $this->repository = $repository;
-    }
-
-    public function perform($request) {
-        $todo = new Todo($request->id(), $request->name());
-
-        $this->repository->add($todo);
-    }
-};
-
-class AlwaysTodoRepository implements TodoRepository {
+class AlwaysTodoRepository implements Repository {
     public $todos = [];
 
     public function add($todo) {
@@ -65,26 +16,22 @@ class AlwaysTodoRepository implements TodoRepository {
     }
 };
 
-class DuplicateTodoRepository implements TodoRepository {
+class DuplicateTodoRepository implements Repository {
     public function add($todo) {
         throw new DuplicateException("{$todo->name()} is already added!");
     }
 };
 
-class DuplicateException extends Exception {
-
-}
-
 describe("Add a todo", function() {
     given('id', function() { return Uuid::uuid4(); });
     given('name', function() { return 'TEST'; });
-    given('request', function() { return new AddRequest($this->id, $this->name); });
+    given('request', function() { return new Request($this->id, $this->name); });
 
     it("Adding a new todo", function() {
         $repository = new AlwaysTodoRepository();
-        $useCase = new Add($repository);
+        $command = new Command($repository);
 
-        $useCase->perform($this->request);
+        $command->perform($this->request);
 
         expect($repository->todos)->toHaveLength(1);
 
@@ -96,8 +43,9 @@ describe("Add a todo", function() {
     it("Can't add a duplicate todo", function() {
         $closure = function() {
             $repository = new DuplicateTodoRepository();
-            $useCase = new Add($repository);
-            $useCase->perform($this->request);
+            $command = new Command($repository);
+
+            $command->perform($this->request);
         };
 
         expect($closure)->toThrow(new DuplicateException("{$this->name} is already added!"));
