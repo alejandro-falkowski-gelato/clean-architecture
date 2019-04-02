@@ -10,7 +10,8 @@
         }
     ],
     "require": {
-        "ramsey/uuid": "^3.8"
+        "ramsey/uuid": "^3.8",
+        "robmorgan/phinx": "^0.10.6"
     },
     "require-dev": {
         "kahlan/kahlan": "^4.6",
