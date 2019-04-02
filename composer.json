@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-
+        "ramsey/uuid": "^3.8"
     },
     "require-dev": {
         "kahlan/kahlan": "^4.6",
