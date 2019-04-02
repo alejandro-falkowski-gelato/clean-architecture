@@ -65,6 +65,16 @@ class AlwaysTodoRepository implements TodoRepository {
     }
 };
 
+class DuplicateTodoRepository implements TodoRepository {
+    public function add($todo) {
+        throw new DuplicateException("{$todo->name()} is already added!");
+    }
+};
+
+class DuplicateException extends Exception {
+
+}
+
 describe("Add a todo", function() {
     given('id', function() { return Uuid::uuid4(); });
     given('name', function() { return 'TEST'; });
@@ -74,7 +84,7 @@ describe("Add a todo", function() {
         $repository = new AlwaysTodoRepository();
         $useCase = new Add($repository);
 
-        $response = $useCase->perform($this->request);
+        $useCase->perform($this->request);
 
         expect($repository->todos)->toHaveLength(1);
 
@@ -83,7 +93,13 @@ describe("Add a todo", function() {
         expect($todo->name())->toBe($this->name);
     });
 
-    // it("Can't add a duplicate todo", function() {
-    //     expect(false)->toBe(true);
-    // });
+    it("Can't add a duplicate todo", function() {
+        $closure = function() {
+            $repository = new DuplicateTodoRepository();
+            $useCase = new Add($repository);
+            $useCase->perform($this->request);
+        };
+
+        expect($closure)->toThrow(new DuplicateException("{$this->name} is already added!"));
+    });
 });
