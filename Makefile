@@ -25,3 +25,6 @@ create-db:
 
 drop-db:
 	dropdb $(PHINX_DB_NAME)
+
+create-migration:
+	bin/phinx create $(name)
