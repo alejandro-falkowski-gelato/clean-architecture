@@ -47,11 +47,17 @@ class SQLRepository implements Repository
      */
     public function add($todo)
     {
-        $this->connection->insert(
-            'todos', [
-            'id' => $todo->id(),
-            'name' => $todo->name(),
-            ]
-        );
+        try {
+            $this->connection->insert(
+                'todos',
+                [ 'id' => $todo->id(), 'name' => $todo->name() ]
+            );
+        } catch (\PDOException $e) {
+            if (strpos($e->getMessage(), 'SQLSTATE[23505]') !== false) {
+                throw new DuplicateException("{$todo->name()} is already added!");
+            }
+
+            throw $e;
+        }
     }
 };

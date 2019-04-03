@@ -45,7 +45,9 @@ class AddTodoContext implements Context
      */
     public function iAlreadyHaveATodoOf($todo)
     {
-        throw new PendingException();
+        $data = new Data(Uuid::uuid4(), $todo);
+        $request = new Request($data);
+        $this->response = $this->command->perform($request);
     }
 
     /**
@@ -55,9 +57,7 @@ class AddTodoContext implements Context
     {
         $data = new Data(Uuid::uuid4(), $todo);
         $request = new Request($data);
-        $response = $this->command->perform($request);
-
-        expect($response->status()->code())->toBe(Status::SUCCESS);
+        $this->response = $this->command->perform($request);
     }
 
     /**
@@ -65,6 +65,7 @@ class AddTodoContext implements Context
      */
     public function iShouldSuccesufullyHaveATodoOf($todo)
     {
+        expect($this->response->status()->code())->toBe(Status::SUCCESS);
         expect($this->featureRepository->exists($todo))->toBe(true);
     }
 
@@ -73,6 +74,7 @@ class AddTodoContext implements Context
      */
     public function iShouldNotHaveAnotherTodoOf($todo)
     {
-        throw new PendingException();
+        expect($this->response->status()->code())->toBe(Status::DUPLICATE);
+        expect($this->featureRepository->exists($todo))->toBe(true);
     }
 }
