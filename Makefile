@@ -1,3 +1,5 @@
+-include .$(env).sh
+
 .PHONY: features
 
 analysis:
@@ -14,3 +16,12 @@ features:
 
 format:
 	./bin/phpcbf src
+
+migrate-db:
+	./bin/phinx migrate -e $(env)
+
+create-db:
+	createdb $(PHINX_DB_NAME)
+
+drop-db:
+	dropdb $(PHINX_DB_NAME)
