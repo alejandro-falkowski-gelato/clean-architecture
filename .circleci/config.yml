@@ -3,10 +3,29 @@ jobs:
   build:
     docker:
       - image: circleci/php:7
+        environment:
+          PHINX_DB_HOST: localhost
+          PHINX_DB_USER: root
+          PHINX_DB_PASS: ''
+          PHINX_DB_NAME: test_db
+          PHINX_DB_PORT: '5432'
+      - image: circleci/postgres:11
+        environment:
+          POSTGRES_USER: root
+          POSTGRES_DB: test_db
+
     working_directory: ~/code
     steps:
       - checkout:
           path: ~/code
+
+      - run:
+          name: Install PHP extensions
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y libpq-dev
+            sudo docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
+            sudo docker-php-ext-install pdo pdo_pgsql pgsql
 
       - restore_cache:
           keys:
@@ -25,6 +44,10 @@ jobs:
       - run:
           name: Run analysis
           command: make analysis
+
+      - run:
+          name: Run database migration
+          command: make env=testing migrate-db
 
       - run:
           name: Run specs
