@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Request class file
+ * Response class file
  *
  * PHP Version 7
  *
@@ -15,7 +15,7 @@
 namespace Gelato\Add;
 
 /**
- * Represents the add request.
+ * Represents the add response.
  *
  * @category Todo
  * @package  Gelato
@@ -24,27 +24,40 @@ namespace Gelato\Add;
  * @link     https://www.gelato.com/
  */
 
-class Request
+class Response
 {
     private $_data;
+    private $_status;
 
      /**
-      * Create an add request
+      * Create an add response
       *
-      * @param Data $data The data of the request.
+      * @param Data   $data   The data of the response.
+      * @param Status $status The status of the response.
       */
-    public function __construct($data)
+    public function __construct($data, $status)
     {
         $this->_data = $data;
+        $this->_status = $status;
     }
 
      /**
-      * The data of the request.
+      * The data of the response.
       *
       * @return Data
       */
     public function data()
     {
         return $this->_data;
+    }
+
+     /**
+      * The status of the response.
+      *
+      * @return Status
+      */
+    public function status()
+    {
+        return $this->_status;
     }
 };

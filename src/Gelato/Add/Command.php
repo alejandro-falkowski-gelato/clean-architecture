@@ -15,6 +15,8 @@
 namespace Gelato\Add;
 
 use Gelato\Todo;
+use Gelato\Add\Response;
+use Gelato\Add\Status;
 
 /**
  * Represents the add command.
@@ -49,8 +51,16 @@ class Command
      */
     public function perform($request)
     {
-        $todo = new Todo($request->id(), $request->name());
+        $data = $request->data();
+        $todo = new Todo($data->id(), $data->name());
 
-        $this->_repository->add($todo);
+        try {
+            $this->_repository->add($todo);
+            $status = new Status(Status::SUCCESS, '');
+        } catch (DuplicateException $e) {
+            $status = new Status(Status::DUPLICATE, $e->getMessage());
+        }
+
+        return new Response($data, $status);
     }
 };

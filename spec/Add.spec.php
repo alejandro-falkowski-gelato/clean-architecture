@@ -5,6 +5,8 @@ use Ramsey\Uuid\Uuid;
 
 use Gelato\Add\Request;
 use Gelato\Add\Repository;
+use Gelato\Add\Data;
+use Gelato\Add\Status;
 use Gelato\Add\DuplicateException;
 use Gelato\Add\Command;
 
@@ -25,13 +27,15 @@ class DuplicateTodoRepository implements Repository {
 describe("Add a todo", function() {
     given('id', function() { return Uuid::uuid4(); });
     given('name', function() { return 'TEST'; });
-    given('request', function() { return new Request($this->id, $this->name); });
+    given('data', function() { return new Data($this->id, $this->name); });
+    given('request', function() { return new Request($this->data); });
 
     it("Adding a new todo", function() {
         $repository = new AlwaysTodoRepository();
         $command = new Command($repository);
 
-        $command->perform($this->request);
+        $response = $command->perform($this->request);
+        expect($response->status()->code())->toBe(Status::SUCCESS);
 
         expect($repository->todos)->toHaveLength(1);
 
@@ -41,13 +45,10 @@ describe("Add a todo", function() {
     });
 
     it("Can't add a duplicate todo", function() {
-        $closure = function() {
-            $repository = new DuplicateTodoRepository();
-            $command = new Command($repository);
+        $repository = new DuplicateTodoRepository();
+        $command = new Command($repository);
 
-            $command->perform($this->request);
-        };
-
-        expect($closure)->toThrow(new DuplicateException("{$this->name} is already added!"));
+        $response = $command->perform($this->request);
+        expect($response->status()->code())->toBe(Status::DUPLICATE);
     });
 });
