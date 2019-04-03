@@ -10,7 +10,7 @@ use Gelato\Add\Status;
 use Gelato\Add\DuplicateException;
 use Gelato\Add\Command;
 
-class AlwaysTodoRepository implements Repository {
+class AlwaysRepository implements Repository {
     public $todos = [];
 
     public function add($todo) {
@@ -18,7 +18,7 @@ class AlwaysTodoRepository implements Repository {
     }
 };
 
-class DuplicateTodoRepository implements Repository {
+class DuplicateRepository implements Repository {
     public function add($todo) {
         throw new DuplicateException("{$todo->name()} is already added!");
     }
@@ -31,7 +31,7 @@ describe("Add a todo", function() {
     given('request', function() { return new Request($this->data); });
 
     it("Adding a new todo", function() {
-        $repository = new AlwaysTodoRepository();
+        $repository = new AlwaysRepository();
         $command = new Command($repository);
 
         $response = $command->perform($this->request);
@@ -45,7 +45,7 @@ describe("Add a todo", function() {
     });
 
     it("Can't add a duplicate todo", function() {
-        $repository = new DuplicateTodoRepository();
+        $repository = new DuplicateRepository();
         $command = new Command($repository);
 
         $response = $command->perform($this->request);

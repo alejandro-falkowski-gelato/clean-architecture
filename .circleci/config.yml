@@ -7,12 +7,13 @@ jobs:
           PHINX_DB_HOST: localhost
           PHINX_DB_USER: root
           PHINX_DB_PASS: ''
-          PHINX_DB_NAME: test_db
+          PHINX_DB_NAME: testing_db
           PHINX_DB_PORT: '5432'
+          DATABASE_URL: postgres://root@localhost:5432/testing_db
       - image: circleci/postgres:11
         environment:
           POSTGRES_USER: root
-          POSTGRES_DB: test_db
+          POSTGRES_DB: testing_db
 
     working_directory: ~/code
     steps:

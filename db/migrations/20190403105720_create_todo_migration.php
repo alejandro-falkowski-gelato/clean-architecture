@@ -34,8 +34,8 @@ class CreateTodoMigration extends AbstractMigration
     {
         $table = $this->table('todos', ['id' => false, 'primary_key' => ['id']]);
         $table->addColumn('id', 'uuid')
-              ->addColumn('todo', 'text')
-              ->addIndex(['todo'], ['unique' => true])
+              ->addColumn('name', 'text')
+              ->addIndex(['name'], ['unique' => true])
               ->create();
     }
 }

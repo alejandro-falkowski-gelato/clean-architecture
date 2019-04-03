@@ -5,6 +5,17 @@ use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use Behat\Behat\Tester\Exception\PendingException;
 
+use Ramsey\Uuid\Uuid;
+use Cake\Datasource\ConnectionManager;
+
+use Gelato\Add\Request;
+use Gelato\Add\Repository;
+use Gelato\Add\Data;
+use Gelato\Add\Status;
+use Gelato\Add\DuplicateException;
+use Gelato\Add\Command;
+use Gelato\Add\SQLRepository;
+
 /**
  * Defines application features from the specific context.
  */
@@ -19,36 +30,48 @@ class AddTodoContext implements Context
      */
     public function __construct()
     {
+        // TODO: This needs to move somewhere else.
+        ConnectionManager::drop('default');
+        ConnectionManager::setConfig('default', ['url' => getenv('DATABASE_URL')]);
+
+        $this->featureRepository = new SQLTodoRepository();
+        $this->featureRepository->clean();
+        $this->repository = new SQLRepository();
+        $this->command = new Command($this->repository);
     }
 
     /**
-     * @Given I already have a todo of :arg1
+     * @Given I already have a todo of :todo
      */
-    public function iAlreadyHaveATodoOf($arg1)
+    public function iAlreadyHaveATodoOf($todo)
     {
         throw new PendingException();
     }
 
     /**
-     * @When I want to add a todo of :arg1
+     * @When I want to add a todo of :todo
      */
-    public function iWantToAddATodoOf($arg1)
+    public function iWantToAddATodoOf($todo)
     {
-        throw new PendingException();
+        $data = new Data(Uuid::uuid4(), $todo);
+        $request = new Request($data);
+        $response = $this->command->perform($request);
+
+        expect($response->status()->code())->toBe(Status::SUCCESS);
     }
 
     /**
-     * @Then I should succesufully have a todo of :arg1
+     * @Then I should succesufully have a todo of :todo
      */
-    public function iShouldSuccesufullyHaveATodoOf($arg1)
+    public function iShouldSuccesufullyHaveATodoOf($todo)
     {
-        throw new PendingException();
+        expect($this->featureRepository->exists($todo))->toBe(true);
     }
 
     /**
-     * @Then I should not have another todo of :arg1
+     * @Then I should not have another todo of :todo
      */
-    public function iShouldNotHaveAnotherTodoOf($arg1)
+    public function iShouldNotHaveAnotherTodoOf($todo)
     {
         throw new PendingException();
     }
