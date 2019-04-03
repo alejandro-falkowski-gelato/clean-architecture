@@ -9,7 +9,7 @@ dependencies:
 	composer install
 
 specs:
-	./bin/kahlan
+	./bin/kahlan --reporter=verbose
 
 features:
 	./bin/behat
