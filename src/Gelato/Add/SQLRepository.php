@@ -14,9 +14,7 @@
 
 namespace Gelato\Add;
 
-use Cake\Datasource\ConnectionManager;
-
-use Gelato\Add\Repository;
+use Gelato\SQLCommonRespository;
 
 /**
  * Represents the SQL repository.
@@ -28,16 +26,8 @@ use Gelato\Add\Repository;
  * @link     https://www.gelato.com/
  */
 
-class SQLRepository implements Repository
+class SQLRepository extends SQLCommonRespository implements Repository
 {
-    /**
-     * Create an SQL repository
-     */
-    public function __construct()
-    {
-        $this->connection = ConnectionManager::get('default');
-    }
-
     /**
      * Adds a todo
      *

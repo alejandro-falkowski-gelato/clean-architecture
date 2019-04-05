@@ -2,11 +2,9 @@
 
 use Cake\Datasource\ConnectionManager;
 
-class SQLTodoRepository {
-    public function __construct() {
-        $this->connection = ConnectionManager::get('default');
-    }
+use Gelato\SQLCommonRespository;
 
+class SQLTodoRepository extends SQLCommonRespository {
     public function clean() {
         $this->connection->execute('TRUNCATE TABLE todos');
     }

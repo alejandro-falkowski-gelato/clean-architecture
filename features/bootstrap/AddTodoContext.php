@@ -6,7 +6,6 @@ use Behat\Gherkin\Node\TableNode;
 use Behat\Behat\Tester\Exception\PendingException;
 
 use Ramsey\Uuid\Uuid;
-use Cake\Datasource\ConnectionManager;
 
 use Gelato\Add\Request;
 use Gelato\Add\Repository;
@@ -30,10 +29,6 @@ class AddTodoContext implements Context
      */
     public function __construct()
     {
-        // TODO: This needs to move somewhere else.
-        ConnectionManager::drop('default');
-        ConnectionManager::setConfig('default', ['url' => getenv('DATABASE_URL')]);
-
         $this->featureRepository = new SQLTodoRepository();
         $this->featureRepository->clean();
         $this->repository = new SQLRepository();
