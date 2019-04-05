@@ -33,7 +33,7 @@ make dependencies
 To run the specs do:
 
 ```sh
-make specs
+make env=testing specs
 ```
 
 ### Features
@@ -41,5 +41,17 @@ make specs
 To run the features do:
 
 ```sh
-make features
+make env=testing features
+```
+
+### Formatting
+
+```sh
+make format
+```
+
+### Analysis
+
+```sh
+make analysis
 ```

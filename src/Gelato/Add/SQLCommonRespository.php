@@ -18,7 +18,9 @@ use Cake\Datasource\ConnectionManager;
 
 /**
  * Represents a common SQL repository.
- * We need to make sure we handle the cases desxcribed here https://www.postgresql.org/docs/9.2/errcodes-appendix.html
+ * We need to make sure we handle the cases described here
+ * https://www.postgresql.org/docs/9.2/errcodes-appendix.html
+ *
  * @category Todo
  * @package  Gelato
  * @author   Alejandro Falkowski <alejandro.falkowski@gelato.com>
