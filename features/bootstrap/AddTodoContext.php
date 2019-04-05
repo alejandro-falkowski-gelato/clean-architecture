@@ -66,7 +66,7 @@ class AddTodoContext implements Context
     public function iShouldSuccesufullyHaveATodoOf($todo)
     {
         expect($this->response->status()->code())->toBe(Status::SUCCESS);
-        expect($this->featureRepository->exists($todo))->toBe(true);
+        expect($this->featureRepository->hasOne($todo))->toBe(true);
     }
 
     /**
@@ -75,6 +75,6 @@ class AddTodoContext implements Context
     public function iShouldNotHaveAnotherTodoOf($todo)
     {
         expect($this->response->status()->code())->toBe(Status::DUPLICATE);
-        expect($this->featureRepository->exists($todo))->toBe(true);
+        expect($this->featureRepository->hasOne($todo))->toBe(true);
     }
 }
