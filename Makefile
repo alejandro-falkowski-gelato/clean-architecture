@@ -15,7 +15,7 @@ features:
 	./bin/behat --verbose
 
 format:
-	./bin/phpcbf src
+	./bin/phpcbf src spec features
 
 migrate-db:
 	./bin/phinx migrate -e $(env)
