@@ -12,7 +12,7 @@ specs:
 	./bin/kahlan --reporter=verbose
 
 features:
-	./bin/behat
+	./bin/behat --verbose
 
 format:
 	./bin/phpcbf src
