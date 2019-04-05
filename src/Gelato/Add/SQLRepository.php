@@ -14,8 +14,6 @@
 
 namespace Gelato\Add;
 
-use Gelato\SQLCommonRespository;
-
 /**
  * Represents the SQL repository.
  *
@@ -37,17 +35,13 @@ class SQLRepository extends SQLCommonRespository implements Repository
      */
     public function add($todo)
     {
-        try {
-            $this->connection->insert(
-                'todos',
-                [ 'id' => $todo->id(), 'name' => $todo->name() ]
-            );
-        } catch (\PDOException $e) {
-            if (strpos($e->getMessage(), 'SQLSTATE[23505]') !== false) {
-                throw new DuplicateException("{$todo->name()} is already added!");
+        $this->withConnection(
+            function ($connection) use ($todo) {
+                $connection->insert(
+                    'todos',
+                    [ 'id' => $todo->id(), 'name' => $todo->name() ]
+                );
             }
-
-            throw $e;
-        }
+        );
     }
 };
