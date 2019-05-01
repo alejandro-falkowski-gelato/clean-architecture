@@ -83,3 +83,11 @@ make format
 ```sh
 make analysis
 ```
+
+#### Start
+
+To start the application
+
+```sh
+make env=testing start
+```

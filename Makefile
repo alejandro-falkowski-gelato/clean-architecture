@@ -28,3 +28,6 @@ drop-db:
 
 create-migration:
 	bin/phinx create $(name)
+
+start:
+	php -S localhost:$(PORT) -t public public/index.php
