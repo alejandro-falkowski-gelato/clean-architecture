@@ -10,12 +10,14 @@
         }
     ],
     "require": {
-
+        "ramsey/uuid": "^3.8",
+        "robmorgan/phinx": "^0.10.6"
     },
     "require-dev": {
         "kahlan/kahlan": "^4.6",
         "behat/behat": "^3.5",
-        "squizlabs/php_codesniffer": "^3.4"
+        "squizlabs/php_codesniffer": "^3.4",
+        "bossa/phpspec2-expect": "^3.1"
     },
     "config": {
         "bin-dir": "bin"

@@ -1,3 +1,5 @@
+-include .$(env).sh
+
 .PHONY: features
 
 analysis:
@@ -7,10 +9,22 @@ dependencies:
 	composer install
 
 specs:
-	./bin/kahlan
+	./bin/kahlan --reporter=verbose
 
 features:
-	./bin/behat
+	./bin/behat --verbose
 
 format:
-	./bin/phpcbf src
+	./bin/phpcbf src spec features
+
+migrate-db:
+	./bin/phinx migrate -e $(env)
+
+create-db:
+	createdb $(PHINX_DB_NAME)
+
+drop-db:
+	dropdb $(PHINX_DB_NAME)
+
+create-migration:
+	bin/phinx create $(name)

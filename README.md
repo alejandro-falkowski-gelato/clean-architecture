@@ -10,7 +10,9 @@ For more on this please review the [following](https://blog.cleancoder.com/uncle
 
 We will focus on the famous [TODO](https://github.com/tastejs/todomvc/blob/master/app-spec.md) application
 
-### Setup
+### Development
+
+#### Setup
 
 Make sure you have the following setup:
 
@@ -20,7 +22,7 @@ brew install composer
 brew install postgres
 ```
 
-### Dependencies
+#### Dependencies
 
 To get the dependencies run:
 
@@ -28,18 +30,56 @@ To get the dependencies run:
 make dependencies
 ```
 
-### Specs
+#### Database
+
+To make sure we have a local database, we run:
+
+```sh
+make env=testing create-db
+```
+
+To destroy it, we run:
+
+```sh
+make env=testing drop-db
+```
+
+To migrate the database, we run:
+
+```sh
+make env=testing migrate-db
+```
+
+To create a migration, we run:
+
+```sh
+make env=testing create-migration
+```
+
+#### Specs
 
 To run the specs do:
 
 ```sh
-make specs
+make env=testing specs
 ```
 
-### Features
+#### Features
 
 To run the features do:
 
 ```sh
-make features
+make env=testing features
+```
+
+#### Formatting
+
+```sh
+make format
+```
+
+#### Analysis
+
+```sh
+make analysis
 ```
