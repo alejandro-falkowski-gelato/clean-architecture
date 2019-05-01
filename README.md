@@ -30,6 +30,32 @@ To get the dependencies run:
 make dependencies
 ```
 
+#### Database
+
+To make sure we have a local database, we run:
+
+```sh
+make env=testing create-db
+```
+
+To destroy it, we run:
+
+```sh
+make env=testing drop-db
+```
+
+To migrate the database, we run:
+
+```sh
+make env=testing migrate-db
+```
+
+To create a migration, we run:
+
+```sh
+make env=testing create-migration
+```
+
 #### Specs
 
 To run the specs do:
